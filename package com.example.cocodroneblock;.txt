@@ -1,0 +1,148 @@
+package com.example.cocodroneblock;
+
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowMetrics;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
+import android.graphics.Color;
+import android.view.MotionEvent;
+import android.widget.ImageView;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
+    private ImageButton hamburgerButton;
+    private NavigationView navigationView;
+    private Button takeoffLandingButton;
+    private LinearLayout takeoffLandingBlocks;
+    private LinearLayout blockArea; // 블록을 추가할 LinearLayout
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Edge-to-Edge 활성화
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        setContentView(R.layout.activity_main);
+
+        // 가로 모드로 고정
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        // 시스템 UI 영역을 고려하여 뷰의 패딩 설정
+        View mainView = findViewById(R.id.main);
+        ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(
+                    systemBars.left,
+                    systemBars.top,
+                    systemBars.right,
+                    systemBars.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
+        // 햄버거 버튼 초기화
+        hamburgerButton = findViewById(R.id.hamburger_button);
+        hamburgerButton.setOnClickListener(v -> {
+            // Navigation Drawer 열기
+            drawerLayout.openDrawer(GravityCompat.END);
+            Log.d("DrawerLayout", "Navigation Drawer opened");
+        });
+        Log.d("DrawerLayout", "DrawerLayout Status: " + drawerLayout);
+
+        // Navigation Drawer 초기화
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        setNavigationDrawerWidth();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // 삭제 버튼 설정
+        ImageView deleteButton = findViewById(R.id.delete_button);
+        deleteButton.setOnClickListener(v -> {
+            if (blockArea.getChildCount() > 0) {
+                blockArea.removeViewAt(blockArea.getChildCount() - 1);
+            } else {
+                Toast.makeText(MainActivity.this, "삭제할 블록이 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    private void setNavigationDrawerWidth() {
+        int screenWidth;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // API 30 이상에서는 WindowMetrics 사용
+            WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
+            Rect bounds = windowMetrics.getBounds();
+            screenWidth = bounds.width();
+        } else {
+            // API 30 미만에서는 DisplayMetrics 사용
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            screenWidth = displayMetrics.widthPixels;
+        }
+
+        // Navigation Drawer 너비 계산 (화면 너비의 절반)
+        int drawerWidth = screenWidth / 4;
+
+        // Navigation Drawer 너비 설정
+        DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) navigationView.getLayoutParams();
+        params.width = drawerWidth;
+        navigationView.setLayoutParams(params);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Navigation Drawer 메뉴 아이템 클릭 시 처리
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_reset) {
+            resetPosition();
+        } else if (itemId == R.id.nav_save) {
+            saveData();
+        } else if (itemId == R.id.nav_load) {
+            loadData();
+        }
+        // Navigation Drawer 닫기
+        drawerLayout.closeDrawer(GravityCompat.END);
+        return true;
+    }
+
+    // 자리 초기화 함수
+    private void resetPosition() {
+        Toast.makeText(this, getString(R.string.reset_position), Toast.LENGTH_SHORT).show();
+        // 여기에 자이로 초기화 로직을 구현합니다.
+    }
+
+    // 저장 함수
+    private void saveData() {
+        Toast.makeText(this, getString(R.string.save), Toast.LENGTH_SHORT).show();
+        // 여기에 저장 로직을 구현합니다.
+    }
+
+    // 불러오기 함수
+    private void loadData() {
+        Toast.makeText(this, getString(R.string.load), Toast.LENGTH_SHORT).show();
+        // 여기에 불러오기 로직을 구현합니다.
+    }
+}

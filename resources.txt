@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">cocodroneBlock</string>
+    <string name="reset_position">자이로 초기화</string>
+    <string name="save">저장</string>
+    <string name="load">불러오기</string>
+    <string name="hamburger_button_desc">햄버거 버튼</string>
+    <string name="delete_desc">삭제 버튼</string>
+    <string name="connected_2">연결됨</string>
+    <string name="connected_1">연결중</string>
+    <string name="unconnected">연결X</string>
+    <string name="start">시작</string>
+    <string name="take_off_and_landing">이   착   륙  ✈︎</string>
+    <string name="speed">속          도  »</string>
+    <string name="altitude">고          도  ↕</string>
+    <string name="move">이          동  ⩞</string>
+    <string name="rotation">회          전  ⤾</string>
+    <string name="rotation_360">360도 회전 ⟳</string>
+    <string name="special_function">특 수 기 능 ⨁</string>
+</resources>
