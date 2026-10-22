@@ -1,0 +1,10 @@
+{
+  "brief": {
+    "identity": "AI 스타트업. AI로 프로그램이나 게임 등 종합적으로 모든 것을 만든다. 특정 분야는 없다.",
+    "goal": "", "offer": "", "place": "", "proof": "", "audience": "", "refs": ""
+  },
+  "transcript": [
+    { "who": "guest", "text": "AI스타트업의 사이트. AI로 프로그램이나 게임 뭐 종합적으로 모든걸 만드는 거라 특정 분야는 없어." }
+  ],
+  "choices": { "languages": ["ko"], "other": "", "mobile": false }
+}
