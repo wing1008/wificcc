@@ -1,0 +1,3 @@
+site frames 572 scroll-window s 22.9 plain 24 map 24
+{"w":"1920","h":"1080","steps":144,"shots":22,"fps":53.4,"p95":33.3,"errs":[],"secs":69.162}
+{"w":"1440","h":"900","steps":120,"shots":22,"fps":58.4,"p95":16.8,"errs":[],"secs":56.984}

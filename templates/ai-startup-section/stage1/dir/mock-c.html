@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Mock C — 만든 것들의 지도</title>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E9EEF6;--ink:#0E1430;--mute:#7D879F;--acc:#2440FF;--tile:#F7F9FC}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'Gothic A1',sans-serif}
+canvas{position:absolute;inset:0}
+nav{position:absolute;left:64px;right:64px;top:36px;display:flex;justify-content:space-between;align-items:center;font:500 13px 'IBM Plex Mono';color:var(--mute);letter-spacing:.06em}
+nav b{font:900 24px 'Gothic A1';color:var(--ink);letter-spacing:-.03em}
+nav a{font:800 15px 'Gothic A1';background:var(--acc);color:#fff;padding:12px 20px;border-radius:6px;letter-spacing:0}
+h1{position:absolute;left:64px;bottom:150px;font:900 132px/0.98 'Gothic A1';letter-spacing:-.06em}
+h1 em{font-style:normal;color:var(--acc)}
+p.sub{position:absolute;left:68px;bottom:84px;font:400 20px 'Gothic A1';color:#3B4566}
+.coord{position:absolute;right:64px;bottom:84px;font:500 13px 'IBM Plex Mono';color:var(--mute);text-align:right;line-height:1.8}
+.zoom{position:absolute;left:1030px;top:170px;width:700px;height:560px;background:var(--tile);border:2px solid var(--acc);border-radius:10px;box-shadow:0 40px 80px -30px rgba(20,40,140,.35);overflow:hidden}
+.zoom header{height:40px;border-bottom:1px solid #DCE2EE;display:flex;align-items:center;gap:8px;padding:0 16px;font:500 12px 'IBM Plex Mono';color:var(--mute)}
+.zoom header i{width:10px;height:10px;border-radius:50%;background:#D3DAE8}
+.zoom .tag{position:absolute;left:-2px;top:-34px;background:var(--acc);color:#fff;font:500 12px 'IBM Plex Mono';padding:6px 10px;border-radius:6px 6px 0 0}
+</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<nav><b>온갖</b><span>지도 배율 ×12 · 만든 것 214개 중 1</span><a>아이디어 보내기</a></nav>
+<div class="zoom" id="z"><span class="tag">ZOOM ×12</span><header><i></i><i></i><i></i>&nbsp; 가계부 도우미 — v0.3</header><canvas id="zc" width="700" height="520" style="position:absolute;left:0;top:40px"></canvas></div>
+<h1>만든 것들의<br><em>지도.</em></h1>
+<p class="sub">프로그램, 게임, 도구 — 분야 없이, 한 장의 지도 위에.</p>
+<div class="coord">TILE 07 · 112<br>프로그램 / 가계부 / 2주</div>
+<script>
+const c=document.getElementById('c'),x=c.getContext('2d');
+// infinite canvas: dot grid + many tiny made-things tiles, zoom origin around the big tile
+x.fillStyle='#C9D2E4';for(let i=0;i<1920;i+=24)for(let j=0;j<1080;j+=24)x.fillRect(i,j,1.4,1.4);
+let seed=7;const R=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const kinds=['app','game','chart','tool'];
+const tiles=[];
+for(let n=0;n<190;n++){const w=40+R()*70,h=w*(.6+R()*.5);const X=R()*1920,Y=60+R()*980;
+ if(X>980&&X<1780&&Y>120&&Y<780)continue; if(X<900&&Y>620)continue; tiles.push({X,Y,w,h,k:kinds[n%4]})}
+// faint lines from big tile to neighbors (connections)
+x.strokeStyle='rgba(36,64,255,.35)';x.setLineDash([3,5]);
+tiles.slice(0,14).forEach(t=>{x.beginPath();x.moveTo(1380,450);x.lineTo(t.X+t.w/2,t.Y+t.h/2);x.stroke()});x.setLineDash([]);
+for(const t of tiles){x.fillStyle='#F7F9FC';x.strokeStyle='#C3CCE0';x.lineWidth=1;x.beginPath();x.roundRect(t.X,t.Y,t.w,t.h,4);x.fill();x.stroke();
+ x.fillStyle='#D5DCEA';
+ if(t.k==='app'){x.fillRect(t.X+4,t.Y+4,t.w-8,4);x.fillRect(t.X+4,t.Y+12,t.w*.4,t.h-16)}
+ if(t.k==='game'){for(let i=0;i<5;i++)x.fillRect(t.X+4+i*(t.w-8)/5,t.Y+t.h-8-((i*7)%3)*5,(t.w-8)/5-1,8+((i*7)%3)*5);x.fillStyle='#2440FF';x.fillRect(t.X+t.w*.5,t.Y+t.h*.3,4,4)}
+ if(t.k==='chart'){x.strokeStyle='#9AA8C8';x.beginPath();x.moveTo(t.X+4,t.Y+t.h-6);for(let i=1;i<6;i++)x.lineTo(t.X+4+i*(t.w-8)/5,t.Y+6+R()*(t.h-12));x.stroke()}
+ if(t.k==='tool'){x.beginPath();x.arc(t.X+t.w/2,t.Y+t.h/2,Math.min(t.w,t.h)*.25,0,7);x.fill()}
+}
+// zoom frame trails: rectangles scaling from a small tile to the big one (the signature zoom-through)
+x.strokeStyle='rgba(36,64,255,.5)';
+for(let k=1;k<5;k++){const f=k/5;const sx=1500,sy=860,sw=60,sh=44;const X=sx+(1030-sx)*f,Y=sy+(170-sy)*f,W=sw+(700-sw)*f,H=sh+(560-sh)*f;x.globalAlpha=.25+.15*k;x.strokeRect(X,Y,W,H)}x.globalAlpha=1;
+x.fillStyle='#2440FF';x.fillRect(1500,860,60,44);
+// inside zoomed tile: a little budget app (code-drawn)
+const z=document.getElementById('zc').getContext('2d');
+z.fillStyle='#0E1430';z.font='800 34px "Gothic A1"';z.fillText('이번 달 432,000원',36,70);
+z.fillStyle='#7D879F';z.font='400 16px "Gothic A1"';z.fillText('식비 · 교통 · 취미 · 기타',36,104);
+const vals=[.52,.21,.17,.10],cols=['#2440FF','#7C8CFF','#B8C2FF','#DCE2FF'];let a=-Math.PI/2;
+vals.forEach((v,i)=>{z.beginPath();z.moveTo(520,250);z.arc(520,250,120,a,a+v*Math.PI*2);z.fillStyle=cols[i];z.fill();a+=v*Math.PI*2});
+z.fillStyle='#F7F9FC';z.beginPath();z.arc(520,250,62,0,7);z.fill();
+for(let i=0;i<4;i++){z.fillStyle=cols[i];z.fillRect(36,150+i*64,14,14);z.fillStyle='#0E1430';z.font='600 18px "Gothic A1"';z.fillText(['식비','교통','취미','기타'][i],62,163+i*64);z.fillStyle='#E3E8F2';z.fillRect(140,154+i*64,200,8);z.fillStyle=cols[i];z.fillRect(140,154+i*64,200*vals[i]/.52,8)}
+z.fillStyle='#2440FF';z.beginPath();z.roundRect(36,430,220,52,8);z.fill();z.fillStyle='#fff';z.font='800 18px "Gothic A1"';z.fillText('지출 한 줄로 기록',62,463);
+</script></body></html>

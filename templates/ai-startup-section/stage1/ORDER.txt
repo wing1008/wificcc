@@ -1,0 +1,57 @@
+Completion report: terse. Results, measurements, times and self-disclosure only; no narrative.
+
+## Why
+Mode ④ (/home/user/uf-service/pipeline/sek/refs/work/DECISIONS-WHY.md #48, #58, #59) is meant to reach AT/Unseen-grade design for real customers.
+- The untested hypothesis (#59, coordinator reading, not a decision): what should transfer from AT/Unseen is their **direction grade** (light, motion, scroll choreography, type–image composition, whitespace, transitions), applied over the **customer's real photos**, with no Blender-built or bought 3D world.
+- Owner: test it on a **clearly different subject**. The difference must be obvious, not "slightly better on the same subject".
+
+## Brief (the coordinator's value; don't ask)
+- The customer's real request: read `/home/user/wificcc/templates/ai-startup-section/brief/BRIEF.md` (their own words, as they said them) and `/home/user/wificcc/templates/ai-startup-section/brief/INTAKE.md` (facts; empty fields are yours to draft and mark [DRAFT]). What the site sells comes from there.
+- Name and language: follow INTAKE.md. Don't rename the business.
+- Device: this site is for desktop web browsers only; no phone layout and no phone QA.
+- **The customer sent no photos. Choose the images this site needs, alone or together:** real photographs under a licence that allows commercial use without attribution (for example the Unsplash or Pexels licence; verify the licence on the official page and record every image's source URL and licence in NOTE); AI images made with Codex on this PC (at most 8; write the prompt to a file and run `codex exec --skip-git-repo-check -C <your work dir> -s workspace-write - < prompt.txt`, prompt on stdin; copy only the files your own run produced); or no images at all, with type, drawing and motion made in code. Record which you chose and why in NOTE.
+  - Stand-in or generated images must not pass as this business's real place, people or products.
+  - No Blender and no imported or bought 3D models; this rule sets the material, not the form. WebGL: image effects over the photos (transitions, displacement, light, grain), plus objects, characters and simple forms built in code, and cut-out image layers.
+  - Images may be cropped, graded and masked. The customer sent no photos: write `REPLACE.md` listing every stand-in or generated image and what the customer should shoot or send to replace it.
+
+## Process
+1. **Art direction first.**
+   - First look at real sites of this same trade on the web. Write down what they commonly do and the visitor's reason behind each; every direction says which of these it keeps, which it breaks, and why. They are for the reasons, not for copying.
+   - Write 3 clearly different direction specs: layout system, type pairing, motion concept, colour grade, and the signature transition.
+   - Mock the key frame of each quickly in HTML.
+   - Put the 3 mocks on a sheet next to the motion sheets of 6 award-level sites (/home/user/uf-service/pipeline/sek/refs/references/motion-sheets: <site>-plain.jpg = 24 frames evenly in time while the site is scrolled; <site>-map.jpg = frames picked denser where the screen changes, coloured lines show where points moved since the previous frame) and next to section-built reference sheets (/home/user/uf-service/pipeline/sek/refs/references/motion-sheets-sections, same format). The sites in `section/` build the page from sections that each sit and move in their own way and hand over to the next: for each direction, put on the sheet the 1 whose sections sit, move and hand over nearest to the way DIRECTIONS.md describes that direction, not in finish, as the level to reach. The other folders there are for ideas, not for the sheet. Also put 2 strips from `floor/` (well-made paid templates, 8 frames evenly down the page) on the sheet as the floor. From all of them take how sections sit, move and hand over, the pacing and the light, not their subject, their 3D or their compositions. Under the sheet write, for each mock, where what the mock shows falls short of its references and whether it clears both floor strips; a mock that does not clear the floor is not picked.
+   - Pick one and record why: who comes to this site and what they should do there (from BRIEF and INTAKE; draft it as [DRAFT] if missing), and how the chosen direction serves them.
+   - **Stop after this step.** Write three files. (1) `dir/DIRECTIONS.md`: the three direction specs, the pick and why. (2) `dir/PLAN.md`: the main idea of the picked direction in one or two sentences, apart from its expression (layout, type, colour, motion, transitions and copy may all be worked out again later); the facts every later build keeps the same (business name, what is offered, prices, who comes and what they should do, contact; prices and contact only when INTAKE.md has them or the brief asks visitors for an action, otherwise left out, not drafted), each drafted fact marked [DRAFT] here and never shown on the page as a mark; and the image route (licensed photographs, AI images with Codex, or no images) with why. (3) `dir/DIALS-1.json` with your own values: {"mood": {"words": [3 to 5 words for its mood], "axes": {"brightness": A("dark", "bright"), "warmth": A("cool", "warm"), "colour_strength": A("restrained", "vivid"), "energy": A("calm", "dynamic"), "ornament": A("minimal", "ornate"), "roughness": A("smooth", "rough and handmade"), "sharpness": A("soft curves", "sharp angles"), "futurism": A("classic", "futuristic"), "formality": A("friendly", "authoritative"), "metaphor": A("plain-spoken", "metaphorical"), "novelty": A("familiar to the trade", "experimental"), "playfulness": A("serious", "playful")}}, "motion_amount": S, "tempo": S, "motion_character": {"options": ["glide", "spring", "snap"], "ai": X}, "scroll_staging": S, "alive_at_rest": {"options": ["off", "on"], "ai": X}, "intro": {"options": ["none", "short", "long"], "ai": X}, "hand": {"options": ["none", "buttons only", "a few places", "protagonist"], "ai": X}, "cursor": {"options": ["default", "own"], "ai": X}, "ui_material": {"options": ["default", "translucent"], "ai": X}, "density": S, "grid_freedom": S, "type_contrast": S, "accent_strength": S, "photo_grade": S, "grain": S, "convention_break": S, "signature_strength": S, "trust_upfront": S, "effects_weight": S, "core": [the names of the dials this main idea cannot lose]}. A(left, right) = {"left": left, "right": right, "min": -2, "max": 2, "ai": your value}, written with the two labels, so that -2 is the left label and +2 the right label. S = {"min": 0, "max": 100, "ai": your value}: the larger the number, the more of what the name says (motion_amount 0 = nothing moves but the scroll; density 100 = the most packed screen; convention_break 100 = breaks the conventions of the trade the most; effects_weight 100 = effects before page weight). X = your choice from options. alive_at_rest on means light, grain and small loops at rest; the frame and the protagonist never sway (D6). hand covers hover, pointer and touch together. Make no images yet. Then end with a short report: later runs do the next steps.
+2. **Storyboard (#57, NOTE §0).**
+   - For each scene (hero plus at least 3): «picture says», a visible change of place, thing or state carried by the photos and direction; and «text says»: the ask, prices, dates, names.
+   - For each scene also «hand says»: what the pointer or touch does there, or nothing, and why.
+   - One main idea from the chosen direction carries the whole page. Before building, write down what this main idea could still do across the page, then build them. Each next scene grows out of what is already on screen by changing how it looks and moves, not only what it stands for, and the way one scene turns into the next is different each time; never by bringing in an unrelated new thing.
+3. **Build:** motion D1–D6 and identity I1–I6 (/home/user/uf-service/pipeline/sek/refs/work/mode4-0923/motion/FINDINGS-motion-identity.md); /home/user/uf-service/pipeline/sek/refs/work/COVERAGE.md 17 rows; #55 (a first-screen CTA is allowed; text motion is not counted as an effect); real-wheel QA (headed; 120 px mouse.wheel steps; no flags; the first screen after 5 s, the holds, the transitions, the end; 1920 and 1440; every language the site has, per INTAKE.md); gzip; fps.
+4. **Flow gate** before polish: record your whole page while it is scrolled and make two frame sheets: `node /home/user/uf-service/pipeline/sek/flowtools/flowrec.mjs site http://127.0.0.1:<port>/ 280 tools/flow` then `python /home/user/uf-service/pipeline/sek/flowtools/flowsheet.py site tools/flow` (site-plain.jpg = frames evenly in time; site-map.jpg = frames denser where the screen changes, coloured lines show where points moved). Give both sheets to 3 fresh no-context subagents and ask each: do the scenes connect, each one changing out of the one before, or do they only look alike; where does a part stand apart from the rest; where does it stop short of what its main idea could do. Then give the web folder, your main-idea list (NOTE §0) and their raw answers to one fresh no-context subagent; that subagent makes the one revision. You do not edit during that revision.
+
+## Hard limits
+- 2 hours wall-clock from your first action. TIME.md gets `date` stamps per phase. Take a «2시간 시점» snapshot at 2:00; overtime is at most 30 min («초과»).
+- Revise at most once after the first full build (fixes after the self-gate count). Use that revision for what the main idea has not done yet, grown out of what is already there; then run the final QA and stop.
+- **Process kills:** only `taskkill /PID <pid>` for PIDs you started and recorded. Never `taskkill /IM`, `pkill`, `killall` or any name-based kill.
+- The owner sees headed browser windows, so keep them to a minimum: headless for mock captures, headed only for the fps runs and the final wheel QA.
+- No Chrome tools. No paid API calls. No commit, no deploy. «모방 0»: don't copy AT, Unseen, the reference-sheet sites or template compositions.
+- Port 8815. Work dir: /home/user/wificcc/templates/ai-startup-section/stage1/. Don't touch other folders.
+
+## Deliverables
+stage1/:
+- dir/: the 3 mocks plus the direction sheet
+- photos/: plus a licence ledger
+- web/
+- tools/
+- JUDGE.jpg
+- WHEEL.jpg
+- GATE-SELF.jpg
+- NOTE.md: §0 storyboard, the direction choice, the self-gate, 17 rows, measurements, gaps, self-disclosure
+- TIME.md
+Report:
+- times;
+- your own verdict: is the difference from the templates **obvious**? Yes or no, and where;
+- the self-gate;
+- fps, first screen and transfer;
+- self-disclosure.
+The coordinator reviews first and may reject up to 2 times.

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온갖 — 한 줄이면, 무엇이든</title>
+<meta name="description" content="프로그램, 게임, 도구 — 분야를 가리지 않고 AI로 만듭니다. 만들고 싶은 것을 한 줄로 보내 주세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&family=IBM+Plex+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<canvas id="paper" aria-hidden="true"></canvas>
+
+<div id="stage">
+  <svg id="ink" aria-hidden="true">
+    <rect id="frame" fill="none" stroke="#14110D" stroke-width="1.5"/>
+    <path id="trail" fill="none" stroke="#FF4A1C" stroke-width="1.2" stroke-dasharray="2 7"/>
+    <path id="rule" fill="none" stroke="#14110D" stroke-width="2" stroke-linecap="square"/>
+  </svg>
+  <div id="tiles"></div>
+  <div id="hero-under" aria-hidden="true"></div>
+  <div id="char" aria-hidden="true"></div>
+
+  <!-- S1 -->
+  <section class="sc" id="s1" aria-label="한 줄">
+    <h1 class="mk"><span><i>한 줄이면,</i></span><span><i>무엇이든.</i></span></h1>
+    <p class="lab mono mk"><span><i>INPUT — 01 &nbsp;·&nbsp; 줄을 눌러 내 문장으로 바꿔 보세요</i></span></p>
+    <button id="editline" class="hit" data-edit aria-label="예시 문장 바꾸기"></button>
+    <input id="lineinput" maxlength="40" autocomplete="off" spellcheck="false" aria-label="만들고 싶은 것 한 줄">
+    <div class="ask mk"><span><i><a href="#end" class="btn" id="toend">아이디어 한 줄 보내기 <b>→</b></a></i></span><span><i class="sub">프로그램 · 게임 · 도구, 분야를 가리지 않습니다</i></span></div>
+  </section>
+
+  <!-- S2 -->
+  <section class="sc" id="s2" aria-label="게임이 됩니다">
+    <p class="lab mono mk"><span><i>OUTPUT 01 — 게임</i></span></p>
+    <h2 class="mk"><span><i>문장 속 낱말이 발판이 되고,</i></span><span><i>커서가 주인공이 됩니다.</i></span></h2>
+  </section>
+
+  <!-- S3 -->
+  <section class="sc" id="s3" aria-label="프로그램이 됩니다">
+    <p class="lab mono mk"><span><i>OUTPUT 02 — 프로그램</i></span></p>
+    <h2 class="mk"><span><i>같은 글자로,</i></span><span><i>이번엔 화면과 버튼을.</i></span></h2>
+    <p class="note mk"><span><i>칸에 마우스를 올리면, 그 칸이 처음 문장의 어느 글자에서 왔는지 보입니다.</i></span></p>
+    <p id="trace" class="trace"></p>
+  </section>
+
+  <!-- S4 -->
+  <section class="sc" id="s4" aria-label="도구가 됩니다">
+    <p class="lab mono mk"><span><i>OUTPUT 03 — 도구</i></span></p>
+    <h2 class="mk"><span><i>분야는 정하지 않았습니다.</i></span><span><i>한 줄이 정합니다.</i></span></h2>
+    <div class="tname mono" data-k="0">가계부 <small>예시</small></div>
+    <div class="tname mono" data-k="1">운동 기록 <small>예시</small></div>
+    <div class="tname mono" data-k="2">배달 동선 <small>예시</small></div>
+  </section>
+
+  <!-- S5 + S6 : a layer that scrolls like a normal page -->
+  <div id="layer">
+    <section class="sc" id="s5" aria-label="이렇게 만듭니다">
+      <p class="lab mono mk"><span><i>PROCESS</i></span></p>
+      <h2 class="mk"><span><i>이렇게 만듭니다.</i></span></h2>
+      <div class="stop" data-k="0"><b class="mono">01</b><h3>한 줄</h3><p>만들고 싶은 것을 한 줄로 보내 주세요. 분야도, 형식도 묻지 않습니다.</p></div>
+      <div class="stop" data-k="1"><b class="mono">02</b><h3>대화로 다듬기</h3><p>누가 쓰는지, 무엇이 꼭 되어야 하는지 — 몇 번의 대화로 한 줄을 구체적으로 만듭니다.</p></div>
+      <div class="stop" data-k="2"><b class="mono">03</b><h3>시안</h3><p>AI로 빠르게 첫 모양을 만들어 보여 드리고, 보면서 고칩니다.</p></div>
+      <div class="stop" data-k="3"><b class="mono">04</b><h3>완성</h3><p>실제로 쓰고 플레이할 수 있는 프로그램·게임·도구로 마무리합니다.</p></div>
+    </section>
+    <section class="sc" id="s6" aria-label="이제 당신의 한 줄">
+      <h2 class="big mk"><span><i>이제 당신의 한 줄.</i></span></h2>
+      <form id="send" autocomplete="off">
+        <span id="endcaret" aria-hidden="true"></span>
+        <input id="endinput" data-edit maxlength="80" placeholder="만들고 싶은 것을 한 줄로 적어 주세요" aria-label="만들고 싶은 것 한 줄">
+        <button class="btn" type="submit">보내기 <b>→</b></button>
+      </form>
+      <p class="sub" id="sendmsg">프로그램 · 게임 · 도구, 무엇이든</p>
+      <footer class="mono"><b class="wm">온갖</b><span>AI로 프로그램 · 게임 · 도구를 만듭니다</span><span>© 2026</span></footer>
+    </section>
+  </div>
+</div>
+
+<nav id="nav"><b class="wm">온갖</b><span class="mono" id="idx">01 / 06 &nbsp; 한 줄</span></nav>
+<div id="cur" aria-hidden="true"></div>
+<div id="track" aria-hidden="true"></div>
+<script src="site.js"></script>
+</body>
+</html>

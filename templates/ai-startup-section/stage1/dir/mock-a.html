@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Mock A — 한 줄의 재배치</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;900&family=IBM+Plex+Sans+KR:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F1ECE2;--ink:#14110D;--mute:#8A8173;--acc:#FF4A1C;--line:#D8D0C2}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:multiply;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+nav{position:absolute;left:80px;right:80px;top:44px;display:flex;justify-content:space-between;font:400 15px 'IBM Plex Mono',monospace;letter-spacing:.04em}
+nav b{font:900 26px 'Noto Serif KR',serif;letter-spacing:-.02em}
+nav span{color:var(--mute)}
+.cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding:0 80px;pointer-events:none}
+.cols i{border-left:1px solid var(--line);opacity:.5}
+h1{position:absolute;left:80px;top:180px;font:900 168px/1.02 'Noto Serif KR',serif;letter-spacing:-.045em}
+h1 em{font-style:normal;color:var(--acc)}
+.prompt{position:absolute;left:80px;top:640px;width:900px;border-top:2px solid var(--ink);padding-top:22px}
+.prompt small{font:400 14px 'IBM Plex Mono',monospace;color:var(--mute);letter-spacing:.06em}
+.prompt p{font:400 44px/1.35 'Noto Serif KR',serif;margin-top:10px;letter-spacing:-.02em}
+.prompt p .gone{color:transparent;border-bottom:2px dotted var(--line)}
+.caret{display:inline-block;width:3px;height:46px;background:var(--acc);vertical-align:-6px;margin-left:4px}
+.meta{position:absolute;left:80px;bottom:56px;font:400 14px 'IBM Plex Mono',monospace;color:var(--mute);display:flex;gap:48px}
+.cta{position:absolute;left:80px;top:860px;display:flex;gap:16px;align-items:center}
+.cta a{font:500 18px 'IBM Plex Sans KR';background:var(--ink);color:var(--paper);padding:18px 30px;border-radius:999px;text-decoration:none}
+.cta span{font:400 15px 'IBM Plex Mono';color:var(--mute)}
+#stage{position:absolute;left:1040px;top:150px;width:800px;height:820px}
+.g{position:absolute;font:900 54px/1 'Noto Serif KR',serif;color:var(--ink);width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+.g.tile{background:var(--ink);color:var(--paper);font-size:30px}
+.g.acc{background:var(--acc);color:var(--paper)}
+.lbl{position:absolute;font:400 13px 'IBM Plex Mono';color:var(--mute);letter-spacing:.05em}
+svg{position:absolute;left:0;top:0;overflow:visible}
+</style></head><body>
+<div class="cols"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<nav><b>온갖</b><span>01 프로그램 &nbsp; 02 게임 &nbsp; 03 도구 &nbsp; 04 의뢰</span><span>KO</span></nav>
+<h1>한 줄이면,<br><em>무엇이든.</em></h1>
+<div class="prompt"><small>INPUT — 01</small>
+<p>비 오는 날 <span class="gone">우산을 찾는</span> 고양이 <span class="gone">게임</span> 만들어 줘<span class="caret"></span></p></div>
+<div class="cta"><a>아이디어 한 줄 보내기 →</a><span>프로그램 · 게임 · 도구, 분야를 가리지 않습니다</span></div>
+<div class="meta"><span>SCROLL ↓ 글자가 재료가 됩니다</span><span>N 37.5665 / E 126.9780</span></div>
+<div id="stage"><svg width="800" height="820" id="trail"></svg></div>
+<script>
+const st=document.getElementById('stage'),svg=document.getElementById('trail');const NS='http://www.w3.org/2000/svg';
+const cell=52,ox=40,oy=170;
+const level=["..............","..............",".......R......","......###.....","..............","...R......##..","####....C.....","#####.######.#","##############"];
+const cells=[];level.forEach((row,r)=>[...row].forEach((ch,c)=>{if(ch!=='.')cells.push({ch,x:ox+c*cell,y:oy+r*cell,r,c})}));
+cells.sort((a,b)=>(b.r*20+b.c)-(a.r*20+a.c)); // bottom-right lands first
+const src="우산을찾는게임우산을찾는게임우산을찾는";
+// path from the gaps in the prompt (stage coords: prompt row ~ y 580, x -700..-500) arcing up then down into the grid
+const sx=-560,sy=590;
+const N=cells.length;
+const path=document.createElementNS(NS,'path');
+path.setAttribute('d',`M${sx} ${sy} C ${sx+120} ${sy-520}, ${ox+300} ${oy-260}, ${ox+380} ${oy+40}`);
+path.setAttribute('stroke','#FF4A1C');path.setAttribute('stroke-width','1.2');path.setAttribute('fill','none');path.setAttribute('stroke-dasharray','2 7');svg.appendChild(path);
+const L=path.getTotalLength();
+cells.forEach((t,i)=>{const d=document.createElement('div');d.className='g';d.style.width=d.style.height=(cell-4)+'px';
+ const landed=i<N-8;
+ if(landed){d.style.left=t.x+'px';d.style.top=t.y+'px';
+   if(t.ch==='#')d.classList.add('tile');
+   if(t.ch==='R'){d.classList.add('acc');d.textContent='☂';d.style.fontSize='30px'}
+   if(t.ch==='C'){d.classList.add('acc');d.textContent='고';d.style.fontSize='30px'}
+ } else {const j=i-(N-8);const pt=path.getPointAtLength(L*(j/8)*0.96+L*0.02);
+   d.style.left=(pt.x-cell/2)+'px';d.style.top=(pt.y-cell/2)+'px';d.textContent=src[j];
+   d.style.transform=`rotate(${(j%3-1)*14}deg) scale(${.7+.3*(1-j/8)})`;d.style.opacity=.35+.65*(1-j/8)}
+ st.appendChild(d)});
+const lab=(x,y,t)=>{const a=document.createElement('div');a.className='lbl';a.style.cssText=`left:${x}px;top:${y}px`;a.textContent=t;st.appendChild(a)};
+lab(60,40,'OUTPUT — 01 / 게임 · 플랫포머 · 1스테이지');lab(60,700,'지워진 글자가 하나씩 날아가 타일이 됩니다   ·   고양이 = "고"');
+</script></body></html>
