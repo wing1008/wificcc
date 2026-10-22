@@ -1,0 +1,8 @@
+{
+  "scenes": 6,
+  "balance": {"options": ["picture", "even", "text"], "ai": "picture"},
+  "ask": {"options": ["first-and-end", "end", "always-visible", "none"], "ai": "first-and-end"},
+  "story_order": {"options": ["story first", "information first"], "ai": "story first"},
+  "first_screen": {"options": ["what it is", "why now", "what to do"], "ai": "what it is"},
+  "depth": {"options": ["summary", "detailed"], "ai": "summary"}
+}
