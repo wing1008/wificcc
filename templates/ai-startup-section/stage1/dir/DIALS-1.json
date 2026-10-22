@@ -1,0 +1,39 @@
+{
+  "mood": {
+    "words": ["inky", "lucid", "inventive", "warm paper", "quietly playful"],
+    "axes": {
+      "brightness": {"left": "dark", "right": "bright", "min": -2, "max": 2, "ai": 2},
+      "warmth": {"left": "cool", "right": "warm", "min": -2, "max": 2, "ai": 1},
+      "colour_strength": {"left": "restrained", "right": "vivid", "min": -2, "max": 2, "ai": -1},
+      "energy": {"left": "calm", "right": "dynamic", "min": -2, "max": 2, "ai": 1},
+      "ornament": {"left": "minimal", "right": "ornate", "min": -2, "max": 2, "ai": -1},
+      "roughness": {"left": "smooth", "right": "rough and handmade", "min": -2, "max": 2, "ai": 0},
+      "sharpness": {"left": "soft curves", "right": "sharp angles", "min": -2, "max": 2, "ai": 1},
+      "futurism": {"left": "classic", "right": "futuristic", "min": -2, "max": 2, "ai": -1},
+      "formality": {"left": "friendly", "right": "authoritative", "min": -2, "max": 2, "ai": 0},
+      "metaphor": {"left": "plain-spoken", "right": "metaphorical", "min": -2, "max": 2, "ai": 1},
+      "novelty": {"left": "familiar to the trade", "right": "experimental", "min": -2, "max": 2, "ai": 2},
+      "playfulness": {"left": "serious", "right": "playful", "min": -2, "max": 2, "ai": 1}
+    }
+  },
+  "motion_amount": {"min": 0, "max": 100, "ai": 70},
+  "tempo": {"min": 0, "max": 100, "ai": 45},
+  "motion_character": {"options": ["glide", "spring", "snap"], "ai": "glide"},
+  "scroll_staging": {"min": 0, "max": 100, "ai": 80},
+  "alive_at_rest": {"options": ["off", "on"], "ai": "on"},
+  "intro": {"options": ["none", "short", "long"], "ai": "short"},
+  "hand": {"options": ["none", "buttons only", "a few places", "protagonist"], "ai": "a few places"},
+  "cursor": {"options": ["default", "own"], "ai": "own"},
+  "ui_material": {"options": ["default", "translucent"], "ai": "default"},
+  "density": {"min": 0, "max": 100, "ai": 30},
+  "grid_freedom": {"min": 0, "max": 100, "ai": 55},
+  "type_contrast": {"min": 0, "max": 100, "ai": 90},
+  "accent_strength": {"min": 0, "max": 100, "ai": 60},
+  "photo_grade": {"min": 0, "max": 100, "ai": 0},
+  "grain": {"min": 0, "max": 100, "ai": 35},
+  "convention_break": {"min": 0, "max": 100, "ai": 75},
+  "signature_strength": {"min": 0, "max": 100, "ai": 85},
+  "trust_upfront": {"min": 0, "max": 100, "ai": 20},
+  "effects_weight": {"min": 0, "max": 100, "ai": 45},
+  "core": ["type_contrast", "scroll_staging", "signature_strength", "convention_break", "brightness"]
+}
